@@ -17,7 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('profiles', 'ProfileController');
+Route::resource('posts', 'PostController');
+
+Route::get('/home', 'ProfileController@index')->name('home');
+
 Auth::routes();
+
+
 
 // // Authentication Routes...
 // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -44,10 +51,4 @@ Auth::routes();
 // /* Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); // v5.x */
 // Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
