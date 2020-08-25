@@ -17,8 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('profiles', 'ProfileController');
-Route::resource('posts', 'PostController');
+Route::group(['middleware' => ['web']], function () {
+    Route::resource('profiles', 'ProfileController');
+    Route::resource('posts', 'PostController');
+});
+
 
 Route::get('/home', 'ProfileController@index')->name('home');
 
@@ -50,5 +53,3 @@ Auth::routes();
 // Route::get('email/verify/{id}/{hash}', 'Auth\VerificationController@verify')->name('verification.verify'); // v6.x
 // /* Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify'); // v5.x */
 // Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
-
-

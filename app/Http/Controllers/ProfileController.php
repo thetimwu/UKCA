@@ -45,9 +45,10 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(\App\Profile $profile)
     {
-        dd($user);
+        $user = $profile->user;
+        return view('profiles.show', compact('user'));
     }
 
     /**
