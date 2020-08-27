@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Profile;
 
 class ProfileController extends Controller
 {
@@ -45,10 +46,10 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(\App\Profile $profile)
+    public function show(Profile $profile)
     {
         $user = $profile->user;
-        return view('profiles.show', compact('user'));
+        return view('profiles.show', compact('user', 'profile'));
     }
 
     /**
@@ -57,9 +58,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Profile $profile)
     {
-        //
+        $this->authorize('edit', $profile);
+        $user = $profile->user;
+        return view('profiles.edit', compact('user', 'profile'));
     }
 
     /**
@@ -69,9 +72,19 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Profile $profile)
     {
-        //
+        $this->authorize('update', $profile);
+
+        $newProfile = $request->validate([
+            'title' => ['required', 'min:3'],
+            'description' => ['required', 'min:3'],
+            'url' => ['url']
+        ]);
+
+        $profile->update($newProfile);
+
+        return redirect(route('profiles.show', ['profile' => $profile]));
     }
 
     /**

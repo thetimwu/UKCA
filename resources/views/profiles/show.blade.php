@@ -10,10 +10,15 @@
             <div class="col-9 pt-5">
                 <div class="d-flex justify-content-between align-items-baseline">
                     <h1>{{$user->username}}</h1>
-                    <a href="{{route('posts.create')}}">Add New Post</a>
+                    @can('update', $profile)
+                      <a href="{{route('posts.create')}}">Add New Post</a>
+                    @endcan
                 </div>
+                @can('update', $profile)
+                  <a href="{{route('profiles.edit', ['user'=>$user, 'profile'=> $profile])}}">Edit Profile</a>
+                @endcan
                 <div class="d-flex">
-                    <div class="pr-5"><strong>123</strong> posts</div>
+                <div class="pr-5"><strong>{{$user->posts()->count()}}</strong> posts</div>
                     <div class="pr-5"><strong>123</strong> followers</div>
                     <div class="pr-5"><strong>123</strong> following</div>
                 </div>
@@ -26,7 +31,11 @@
 
     <div class="row pt-5">
     @foreach($user->posts as $post)
-        <div class="col-4"><img src="/storage/{{$post->image}}" class="w-100" alt=""></div>
+        <div class="col-4 pb-4">
+        <a href="{{route('posts.show', ['post'=> $post->id])}}">
+            <img src="/storage/{{$post->image}}" class="w-100" alt="">
+          </a>
+        </div>
     @endforeach
     </div>
 </div>
