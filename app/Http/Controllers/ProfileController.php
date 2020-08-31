@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Profile;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -25,9 +26,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
+    { }
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +59,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        $this->authorize('edit', $profile);
+        $this->authorize('update', $profile);
         $user = $profile->user;
         return view('profiles.edit', compact('user', 'profile'));
     }
@@ -79,10 +78,18 @@ class ProfileController extends Controller
         $newProfile = $request->validate([
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
-            'url' => ['url']
+            'url' => ['url'],
+            'image' => []
         ]);
 
-        $profile->update($newProfile);
+        if ($request['image']) {
+            $imagePath = request('image')->store('profile', 'public');
+            $image = Image::make(public_path("storage/${imagePath}"))->fit(500, 500);
+            $image->save();
+            $imageArray = ['image' => $imagePath];
+        }
+
+        auth()->user()->profile->update(array_merge($newProfile, $imageArray ?? []));
 
         return redirect(route('profiles.show', ['profile' => $profile]));
     }

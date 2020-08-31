@@ -5,9 +5,8 @@
     <div class="row justify-content-center">
         <div class="row">
             <div class="col-3 p-5">
-                <img src="/images/image1.png" alt="profile-img" class="w-100 rounded-circle">
+            <img src="/storage/{{$user->profile->image}}" alt="profile-img" class="w-100 rounded-circle">
             </div>
-            
             <div class="col-9 pt-5">
                 <div class="d-flex justify-content-between align-items-baseline">
                     <h1>{{$user->username}}</h1>
