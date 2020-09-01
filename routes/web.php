@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('follow/{user}', 'FollowsController@store');
+
 Route::group(['middleware' => ['web']], function () {
     Route::resource('profiles', 'ProfileController');
     Route::resource('posts', 'PostController');

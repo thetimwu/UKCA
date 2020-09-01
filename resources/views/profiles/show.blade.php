@@ -9,7 +9,12 @@
             </div>
             <div class="col-9 pt-5">
                 <div class="d-flex justify-content-between align-items-baseline">
-                    <h1>{{$user->username}}</h1>
+                    <div class="h4">{{$user->username}}</div>
+                    {{$user->id}}
+                    <div id="react-button" data-userid="{{$user->id}}">
+                    <FollowButton />
+                    </div>
+
                     @can('update', $profile)
                       <a href="{{route('posts.create')}}">Add New Post</a>
                     @endcan
