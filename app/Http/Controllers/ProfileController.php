@@ -14,10 +14,11 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        $user = User::findOrFail(1);
-        return view('profiles.index', compact('user'));
+        $follows = (auth()->user()) ? auth()->user()->follow->contains($user) : false;
+        // $user = User::findOrFail(1);
+        return view('profiles.index', compact('user', 'follows'));
     }
 
     /**
@@ -82,12 +83,16 @@ class ProfileController extends Controller
             'image' => []
         ]);
 
+        dd($newProfile);
+
         if ($request['image']) {
             $imagePath = request('image')->store('profile', 'public');
             $image = Image::make(public_path("storage/${imagePath}"))->fit(500, 500);
             $image->save();
             $imageArray = ['image' => $imagePath];
         }
+
+        dd($imageArray);
 
         auth()->user()->profile->update(array_merge($newProfile, $imageArray ?? []));
 

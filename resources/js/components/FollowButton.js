@@ -4,8 +4,15 @@ import axios from "axios";
 
 function FollowButton(props) {
     const clickHandler = async () => {
-        const res = await axios.post("/follow/" + props.userid);
-        console.log(res.data);
+        try {
+            const res = await axios.post("/follow/" + props.userid);
+            console.log(res.data);
+        } catch (err) {
+            if (err.data.status == 401) {
+                window.location = "/login";
+            }
+            console.log(err);
+        }
     };
     return (
         <div>

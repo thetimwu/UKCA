@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', view('posts.index', 'PostController@index'));
 
-Route::post('follow/{user}', 'FollowsController@store');
+Route::post('/follow/{user}', 'FollowsController@store');
 
 Route::group(['middleware' => ['web']], function () {
     Route::resource('profiles', 'ProfileController');

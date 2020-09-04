@@ -66647,19 +66647,32 @@ function FollowButton(props) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/follow/" + props.userid);
 
-            case 2:
+            case 3:
               res = _context.sent;
               console.log(res.data);
+              _context.next = 11;
+              break;
 
-            case 4:
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+
+              if (_context.t0.data.status == 401) {
+                window.location = "/login";
+              }
+
+              console.log(_context.t0);
+
+            case 11:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[0, 7]]);
     }));
 
     return function clickHandler() {
