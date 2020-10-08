@@ -90,19 +90,16 @@ class ProfileController extends Controller
             'title' => ['required', 'min:3'],
             'description' => ['required', 'min:3'],
             'url' => ['url'],
-            'image' => []
+            'image' => ''
         ]);
-
-        dd($newProfile);
 
         if ($request['image']) {
             $imagePath = request('image')->store('profile', 'public');
             $image = Image::make(public_path("storage/${imagePath}"))->fit(500, 500);
             $image->save();
+
             $imageArray = ['image' => $imagePath];
         }
-
-        dd($imageArray);
 
         auth()->user()->profile->update(array_merge($newProfile, $imageArray ?? []));
 
