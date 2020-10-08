@@ -11,7 +11,7 @@
                 <div class="d-flex justify-content-between align-items-baseline">
                     <div class="h4">{{$user->username}}</div>
                     {{$user->id}}
-                    <div id="react-button" data-userid="{{$user->id}}">
+                    <div id="react-button" data-userid="{{$user->id}}" data-user="{{$user}}">
                     <FollowButton />
                     </div>
 

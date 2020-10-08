@@ -14,10 +14,11 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        $user = User::findOrFail(1);
-        return view('profiles.index', compact('user'));
+        // $user = User::findOrFail(1);
+        $follow = (auth()->user()) ? auth()->user()->follow->contains($user) : false;
+        return view('profiles.index', compact('user', 'follows'));
     }
 
     /**
