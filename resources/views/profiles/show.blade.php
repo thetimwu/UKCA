@@ -11,7 +11,7 @@
                 <div class="d-flex justify-content-between align-items-baseline">
                     <div class="h4">{{$user->username}}</div>
                     {{$user->id}}
-                    <div id="react-button" data-userid="{{$user->id}}">
+                <div id="react-button" data-userid="{{$user->id}}" data-follows="{{$follows}}">
                     <FollowButton />
                     </div>
 
@@ -23,9 +23,9 @@
                   <a href="{{route('profiles.edit', ['user'=>$user, 'profile'=> $profile])}}">Edit Profile</a>
                 @endcan
                 <div class="d-flex">
-                <div class="pr-5"><strong>{{$user->posts()->count()}}</strong> posts</div>
-                    <div class="pr-5"><strong>123</strong> followers</div>
-                    <div class="pr-5"><strong>123</strong> following</div>
+                <div class="pr-5"><strong>{{$user->posts->count()}}</strong> posts</div>
+                    <div class="pr-5"><strong>{{$user->profile->followers->count()}}</strong> followers</div>
+                <div class="pr-5"><strong>{{$user->following->count()}}</strong> following</div>
                 </div>
                 <div class="pt-1 font-weight-bold">{{$user->profile->title}}</div>
                 <div>{{$user->profile->description}}</div>
